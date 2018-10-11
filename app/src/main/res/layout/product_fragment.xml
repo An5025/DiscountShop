@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:id="@+id/discount_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:paddingTop="5dp"
+        android:stretchColumns="1">
+
+        <Button
+            android:id="@+id/scan_btn"
+            android:layout_margin="5dp"
+            android:text="@string/scan_product"
+            android:background="@color/yellow"
+            android:textColor="@color/orange"/>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/name"
+                android:text="@string/name"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/name_et"
+                android:inputType="text"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/brand"
+                android:text="@string/brand"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/brand_et"
+                android:inputType="text"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/capacity_tv"
+                android:text="@string/capacity"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/capacity_et"
+                android:inputType="text"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/discount"
+                android:text="@string/discount"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/discount_et"
+                android:inputType="number"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/expiry_date"
+                android:text="@string/countdown"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/countdown_et"
+                android:inputType="number"/>
+        </TableRow>
+
+        <Button
+            android:id="@+id/discount_confirm_btn"
+            android:layout_margin="40dp"
+            android:background="@color/orange"
+            android:text="@string/confirm"
+            android:textColor="@color/yellow"/>
+
+    </TableLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:id="@+id/phoneNumberET"
+        android:hint="@string/input_your_phone_number"
+        android:inputType="phone"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+    <Button
+        android:id="@+id/get_code_btn"
+        android:text="@string/get_verification_code"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"/>
+    <EditText
+        android:id="@+id/verificationCodeET"
+        android:hint="@string/verification_code"
+        android:inputType="number"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+    <Button
+        android:id="@+id/login_btn"
+        android:text="@string/login"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"/>
+
+
+</LinearLayout>

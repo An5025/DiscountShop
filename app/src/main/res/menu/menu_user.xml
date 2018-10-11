@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="project.mad.com.discountshop.Activities.MainActivity">
+
+    <item
+        android:id="@+id/your_credit"
+        android:orderInCategory="100"
+        android:title="@string/your_credit"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sign"
+        android:orderInCategory="101"
+        android:title="@string/login"
+        app:showAsAction="never" />
+</menu>

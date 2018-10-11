@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "281916500040",
+    "firebase_url": "https://discountshop-282d4.firebaseio.com",
+    "project_id": "discountshop-282d4",
+    "storage_bucket": "discountshop-282d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281916500040:android:3b9d7c5889d84292",
+        "android_client_info": {
+          "package_name": "project.mad.com.discountshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281916500040-qe0p62mo5g41a5oer2t7o2eet9cmm2qu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "project.mad.com.discountshop",
+            "certificate_hash": "6aee42039085a57e75d4d751080fb2d1ba1cad57"
+          }
+        },
+        {
+          "client_id": "281916500040-s67dmrfbq4v82k3cvolgc4cefd69be9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9dCC86EOhNnlKfdEDO-mRRV48XZGDABY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281916500040-s67dmrfbq4v82k3cvolgc4cefd69be9n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

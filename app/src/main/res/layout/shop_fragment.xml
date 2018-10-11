@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:id="@+id/discount_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:paddingTop="30dp"
+        android:stretchColumns="1">
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/shopName"
+                android:text="@string/name"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/shop_name_et"
+                android:inputType="text"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/shop_discount"
+                android:text="@string/discount"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/shop_discount_et"
+                android:inputType="number"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/expiry_date"
+                android:text="@string/countdown"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/shop_countdown_et"
+                android:inputType="number"/>
+        </TableRow>
+
+        <Button
+            android:id="@+id/shop_discount_confirm_btn"
+            android:layout_margin="40dp"
+            android:text="@string/confirm"
+            android:background="@color/orange"
+            android:textColor="@color/yellow"/>
+
+    </TableLayout>
+</android.support.constraint.ConstraintLayout>
