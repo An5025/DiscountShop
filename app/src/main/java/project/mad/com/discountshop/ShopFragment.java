@@ -10,15 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import project.mad.com.discountshop.View.IDiscountShopView;
-import project.mad.com.discountshop.model.FirebaseShopDiscountModel;
+import project.mad.com.discountshop.view.IDiscountShopView;
+import project.mad.com.discountshop.impl.FirebaseShopDiscountPresenter;
 
 public class ShopFragment extends Fragment implements IDiscountShopView{
     private static final String TAG = "ProductFragment";
-    EditText mName, mCapacity, mBrand, mCountdown, mDiscount;
-    int discount, countdown;
-    FirebaseShopDiscountModel mPresenter;
+    EditText mName, mDate, mDiscount;
+    int discount;
+    FirebaseShopDiscountPresenter mPresenter;
     Button submit_btn;
     View mView;
 
@@ -29,18 +30,17 @@ public class ShopFragment extends Fragment implements IDiscountShopView{
 
         mName = view.findViewById(R.id.shop_name_et);
         mDiscount = view.findViewById(R.id.shop_discount_et);
-        mCountdown = view.findViewById(R.id.shop_countdown_et);
+        mDate = view.findViewById(R.id.shop_date_et);
         submit_btn = view.findViewById(R.id.shop_discount_confirm_btn);
-        mPresenter = new FirebaseShopDiscountModel(this);
+        mPresenter = new FirebaseShopDiscountPresenter(this);
         mView = view;
 
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 discount = Integer.parseInt(mDiscount.getText().toString().trim());
-                countdown = Integer.parseInt(mCountdown.getText().toString().trim());
-                mPresenter.input(mName.getText().toString().trim(),
-                                discount, countdown);
+                mPresenter.input(mName.getText().toString().trim(), discount,
+                                mDate.getText().toString().trim());
             }
         });
         return view;
@@ -48,16 +48,21 @@ public class ShopFragment extends Fragment implements IDiscountShopView{
 
     @Override
     public void showValidationError() {
-        Snackbar.make(mView, "input is invalid", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mView, R.string.input_invalid, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void inputSuccess() {
-        Snackbar.make(mView, "input success", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mView, R.string.input_success, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void inputError() {
-        Snackbar.make(mView, "input error", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mView, R.string.input_error, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void discountInvalid() {
+        Toast.makeText(getActivity(), R.string.discount_invalid, Toast.LENGTH_SHORT).show();
     }
 }

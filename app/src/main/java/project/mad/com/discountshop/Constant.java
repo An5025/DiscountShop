@@ -9,8 +9,8 @@ public class Constant {
     public static final String KEY_BRAND = "brand";
     public static final String KEY_CAPACITY = "capacity";
     public static final String KEY_DISCOUNT = "discount";
-    public static final String KEY_DATE = "countdown";
-    public static final String KEY_CODE = "1";
+    public static final String KEY_DATE = "expiry date";
+    public static final int KEY_CODE = 1;
     public static final String KEY_NO_BARCODE = "No barcode found";
 }
 

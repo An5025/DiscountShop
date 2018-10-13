@@ -1,4 +1,4 @@
-package project.mad.com.discountshop.model;
+package project.mad.com.discountshop.impl;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -14,10 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import project.mad.com.discountshop.Constant;
-import project.mad.com.discountshop.Presenter.IBarcodePresenter;
-import project.mad.com.discountshop.View.IBarcodeView;
+import project.mad.com.discountshop.presenter.IBarcodePresenter;
+import project.mad.com.discountshop.view.IBarcodeView;
 
-public class FirebaseBarcodeModel implements IBarcodePresenter{
+public class FirebaseBarcodePresenter implements IBarcodePresenter{
 
     private IBarcodeView mIBarcodeView;
     //private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -27,7 +27,7 @@ public class FirebaseBarcodeModel implements IBarcodePresenter{
     //private DatabaseReference userRef = usersRef.child(mUid);
 
 
-    public FirebaseBarcodeModel(IBarcodeView IBarcodeView) {
+    public FirebaseBarcodePresenter(IBarcodeView IBarcodeView) {
         mIBarcodeView = IBarcodeView;
     }
 

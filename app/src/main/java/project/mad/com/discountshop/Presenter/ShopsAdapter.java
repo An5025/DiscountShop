@@ -1,11 +1,11 @@
-package project.mad.com.discountshop.Presenter;
+package project.mad.com.discountshop.presenter;
 
 import android.content.Context;
 
 import java.util.List;
 
 import project.mad.com.discountshop.Shop;
-import project.mad.com.discountshop.View.IShopsRecyclerView;
+import project.mad.com.discountshop.view.IShopsRecyclerView;
 
 public class ShopsAdapter{
     List<Shop> mShopsArray;

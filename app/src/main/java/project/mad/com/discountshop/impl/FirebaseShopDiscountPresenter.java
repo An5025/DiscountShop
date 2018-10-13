@@ -1,4 +1,4 @@
-package project.mad.com.discountshop.model;
+package project.mad.com.discountshop.impl;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -16,12 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import project.mad.com.discountshop.Constant;
-import project.mad.com.discountshop.Presenter.IDiscountShopPresenter;
+import project.mad.com.discountshop.presenter.IDiscountShopPresenter;
 import project.mad.com.discountshop.Product;
 import project.mad.com.discountshop.Shop;
-import project.mad.com.discountshop.View.IDiscountShopView;
+import project.mad.com.discountshop.view.IDiscountShopView;
 
-public class FirebaseShopDiscountModel implements IDiscountShopPresenter{
+public class FirebaseShopDiscountPresenter implements IDiscountShopPresenter{
 
     private IDiscountShopView mIDiscountShopView;
     //private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -32,21 +32,19 @@ public class FirebaseShopDiscountModel implements IDiscountShopPresenter{
     private ArrayList<Shop> mShops = new ArrayList<Shop>();
     Query shopsRef;
 
-    public FirebaseShopDiscountModel(IDiscountShopView IDiscountShopView) {
+    public FirebaseShopDiscountPresenter(IDiscountShopView IDiscountShopView) {
         mIDiscountShopView = IDiscountShopView;
     }
 
     @Override
-    public void input(String name, Integer discount, Integer countdown) {
-//        String newPostId = userRef.push().getKey();
-
-        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(discount.toString()) || TextUtils.isEmpty(countdown.toString())){
+    public void input(String name, Integer discount, String date) {
+        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(discount.toString()) || TextUtils.isEmpty(date)){
             mIDiscountShopView.showValidationError();
-        }else{
+        }else if (discount>0 && discount<100){
             Map<String, Object> post = new HashMap<>();
             post.put(Constant.KEY_NAME, name);
             post.put(Constant.KEY_DISCOUNT, discount);
-            post.put(Constant.KEY_DATE, countdown);
+            post.put(Constant.KEY_DATE, date);
             shopRef.push().setValue(post); //should be userRef
             shopRef.addValueEventListener(new ValueEventListener() {//should be userRef
                 @Override
@@ -60,6 +58,8 @@ public class FirebaseShopDiscountModel implements IDiscountShopPresenter{
                     Log.e("onCancelled: ", databaseError.toString());
                 }
             });
+        }else{
+            mIDiscountShopView.discountInvalid();
         }
     }
 

@@ -1,6 +1,6 @@
-package project.mad.com.discountshop.Presenter;
+package project.mad.com.discountshop.presenter;
 
 public interface IDiscountPresenter {
 
-    void input(String name, String brand, String capacity, Integer discount, Integer countdown);
+    void input(String name, String brand, String capacity, Integer discount, String date);
 }

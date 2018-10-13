@@ -1,4 +1,4 @@
-package project.mad.com.discountshop.model;
+package project.mad.com.discountshop.impl;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import project.mad.com.discountshop.Presenter.ShopsAdapter;
+import project.mad.com.discountshop.presenter.ShopsAdapter;
 import project.mad.com.discountshop.R;
 import project.mad.com.discountshop.Shop;
 import project.mad.com.discountshop.ShopsActivity;

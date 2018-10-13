@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/countdown_days"
+                android:text="@string/date_view"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/orange"/>

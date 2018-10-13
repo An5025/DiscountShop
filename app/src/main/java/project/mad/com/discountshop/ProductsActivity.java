@@ -91,7 +91,7 @@ public class ProductsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Snackbar.make(mView, getString(R.string.onCancelled), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mView, getString(R.string.error), Snackbar.LENGTH_SHORT).show();
             }
         });
     }

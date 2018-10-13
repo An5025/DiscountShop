@@ -15,13 +15,13 @@ import android.widget.EditText;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
-import project.mad.com.discountshop.View.IBarcodeView;
-import project.mad.com.discountshop.model.FirebaseBarcodeModel;
+import project.mad.com.discountshop.view.IBarcodeView;
+import project.mad.com.discountshop.impl.FirebaseBarcodePresenter;
 
 public class BarcodeFragment extends Fragment implements IBarcodeView{
     private static final String TAG = "BarcodeFragment";
     EditText mName, mCapacity, mBrand, mBarcode;
-    FirebaseBarcodeModel mPresenter;
+    FirebaseBarcodePresenter mPresenter;
     Button submit_btn, scan_btn;
     View mView;
 
@@ -36,7 +36,7 @@ public class BarcodeFragment extends Fragment implements IBarcodeView{
         mCapacity = view.findViewById(R.id.product_capacity_et);
         submit_btn = view.findViewById(R.id.barcode_confirm_btn);
         scan_btn = view.findViewById(R.id.scan_barcode_btn);
-        mPresenter = new FirebaseBarcodeModel(this);
+        mPresenter = new FirebaseBarcodePresenter(this);
         mView = view;
 
 
@@ -55,7 +55,7 @@ public class BarcodeFragment extends Fragment implements IBarcodeView{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ScanBarcodeActivity.class);
-                startActivityForResult(intent, Integer.parseInt(Constant.KEY_CODE));
+                startActivityForResult(intent, Constant.KEY_CODE);
             }
         });
         return view;
@@ -63,7 +63,7 @@ public class BarcodeFragment extends Fragment implements IBarcodeView{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Integer.parseInt(Constant.KEY_CODE)){
+        if (requestCode == Constant.KEY_CODE){
             if (resultCode == CommonStatusCodes.SUCCESS){
                 if (data != null){
                     Barcode barcode = data.getParcelableExtra(Constant.KEY_BARCODE);
@@ -79,21 +79,21 @@ public class BarcodeFragment extends Fragment implements IBarcodeView{
 
     @Override
     public void showValidationError() {
-        Snackbar.make(mView, "input is invalid", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mView, R.string.input_error, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void inputSuccess() {
-        Snackbar.make(mView, "input success", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mView, R.string.input_success, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void inputError() {
-        Snackbar.make(mView, "input error", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mView, R.string.input_success, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void barcodeInvalid() {
-        Snackbar.make(mView, "Barcode is invalid", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mView, R.string.input_invalid, Snackbar.LENGTH_LONG).show();
     }
 }

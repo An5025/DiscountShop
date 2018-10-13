@@ -71,12 +71,12 @@
 
             <TextView
                 android:id="@+id/expiry_date"
-                android:text="@string/countdown"
+                android:text="@string/date"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/countdown_et"
-                android:inputType="number"/>
+                android:id="@+id/date_et"
+                android:inputType="date"/>
         </TableRow>
 
         <Button

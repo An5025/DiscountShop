@@ -1,4 +1,4 @@
-package project.mad.com.discountshop.View;
+package project.mad.com.discountshop.view;
 
 public interface IBarcodeView {
 

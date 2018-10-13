@@ -1,4 +1,4 @@
-package project.mad.com.discountshop.model;
+package project.mad.com.discountshop.impl;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import project.mad.com.discountshop.R;
-import project.mad.com.discountshop.View.IShopsRecyclerView;
+import project.mad.com.discountshop.view.IShopsRecyclerView;
 
 public class ShopsViewHolder extends RecyclerView.ViewHolder implements IShopsRecyclerView{
     TextView shop_name, shop_discount, shop_countdown, shop_votes;
