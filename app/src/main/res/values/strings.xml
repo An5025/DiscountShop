@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">DiscountShop</string>
-    <string name="product">Product</string>
+    <string name="product">Products</string>
     <string name="me">Me</string>
-    <string name="shop">Shop</string>
+    <string name="shop">Shops</string>
     <string name="order_by_date">Order by countdown</string>
     <string name="order_by_discount">Order by discount</string>
     <string name="order_by_credit">Order by credit</string>
@@ -49,4 +49,14 @@
     <string name="input_success">Input success</string>
     <string name="input_invalid">Input is invalid</string>
     <string name="discount_invalid">Discount number is invalid</string>
+    <string name="sign_out">Sign out</string>
+    <string name="user_name">user name</string>
+    <string name="user_email">user email</string>
+    <string name="add">Add</string>
+    <string name="databaseError">Database Error</string>
+    <string name="barcodeDetection">Receive Detections:</string>
+    <string name="select_date">"  "Select Date</string>
+    <string name="space">"  "</string>
+    <string name="slash">/</string>
+
 </resources>

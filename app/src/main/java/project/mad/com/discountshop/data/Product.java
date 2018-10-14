@@ -1,18 +1,32 @@
-package project.mad.com.discountshop;
+package project.mad.com.discountshop.data;
 
+/**
+ * Product model
+ * get and set product data
+ */
 public class Product extends Shop {
-    private String name, brand, capacity;
-    private int discount, countdown, votes;
+    private String name, brand, capacity, date;
+    private int discount, votes;
 
     public Product() {
     }
 
-    public Product(String name, String brand, String capacity, int discount, int countdown, int votes) {
+    /**
+     * product constructor
+     * initialize variables
+     * @param name
+     * @param brand
+     * @param capacity
+     * @param discount
+     * @param date
+     * @param votes
+     */
+    public Product(String name, String brand, String capacity, int discount, String date, int votes) {
         this.name = name;
         this.brand = brand;
         this.capacity = capacity;
         this.discount = discount;
-        this.countdown = countdown;
+        this.date = date;
         this.votes = votes;
     }
 
@@ -48,12 +62,14 @@ public class Product extends Shop {
         this.discount = discount;
     }
 
-    public int getCountdown() {
-        return countdown;
+    @Override
+    public String getDate() {
+        return date;
     }
 
-    public void setCountdown(int countdown) {
-        this.countdown = countdown;
+    @Override
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getVotes() {

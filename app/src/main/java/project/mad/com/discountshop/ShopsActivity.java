@@ -24,13 +24,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import project.mad.com.discountshop.data.Shop;
+
+/**
+ * ShopsActivity
+ * retrieve all shops' mDiscount2 information
+ * dispaly them by recyclerview
+ */
 public class ShopsActivity extends AppCompatActivity {
     private static final String TAG = "ShopsActivity";
-    RecyclerView mShopRecyclerView;
+    private RecyclerView mShopRecyclerView;
     private ArrayList<Shop> mShops = new ArrayList<Shop>();
     private ShopsAdapter mShopAdapter;
-    Query shopsRef;
-    boolean disc_order = false, count_oder = false, vote_order = false;
+    Query mShopsRef;
     View mView;
 
     @Override
@@ -41,7 +47,11 @@ public class ShopsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         BottomNavigationView bottomNav = findViewById(R.id.navigation_bar);
+        BottomNavigationViewHelper.disableShiftMode(bottomNav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+        Menu mMenu = bottomNav.getMenu();
+        MenuItem menuItem = mMenu.getItem(0);
+        menuItem.setChecked(true);
 
         //Initialize the recyclerView
         mShopRecyclerView = findViewById(R.id.shopsRecyclerView);
@@ -50,11 +60,13 @@ public class ShopsActivity extends AppCompatActivity {
         mShopRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mShopRecyclerView.setAdapter(mShopAdapter);
         mShopRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-//        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.recyclerview_divider));
         getDataFirebase();
     }
 
+    /**
+     * this method setup four activities at the bottom navigation
+     * control the activityies' shifting
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new
             BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -67,9 +79,13 @@ public class ShopsActivity extends AppCompatActivity {
                             Intent intent2 = new Intent(ShopsActivity.this, ProductsActivity.class);
                             startActivity(intent2);
                             break;
-                        case R.id.bottom_user:
-                            Intent intent3 = new Intent(ShopsActivity.this, UserActivity.class);
+                        case R.id.bottom_add_info:
+                            Intent intent3 = new Intent(ShopsActivity.this, AddActivity.class);
                             startActivity(intent3);
+                            break;
+                        case R.id.bottom_user:
+                            Intent intent4 = new Intent(ShopsActivity.this, UserActivity.class);
+                            startActivity(intent4);
                             break;
                     }
                     return true;
@@ -89,38 +105,27 @@ public class ShopsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.orderByDiscount) {
-            disc_order = true;
             Toast.makeText(this, "click 1", Toast.LENGTH_SHORT).show();
-            return disc_order;
         }else if (id == R.id.orderByDate) {
-            count_oder = true;
             Toast.makeText(this, "click 2", Toast.LENGTH_SHORT).show();
-            return count_oder;
         }else if (id == R.id.orderByCredit) {
-            vote_order = true;
             Toast.makeText(this, "click 3", Toast.LENGTH_SHORT).show();
-            return vote_order;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * use shops reference to get shop information and save then to a list
+     */
     void getDataFirebase(){
+        mShopsRef = FirebaseDatabase.getInstance().getReference().child(Constants.KEY_SHOP);
 
-        shopsRef = FirebaseDatabase.getInstance().getReference().child(Constant.KEY_SHOP);
-
-//        shopsRef = FirebaseDatabase.getInstance().getReference().child(Constant.KEY_SHOP).orderByChild("discount");
-//
-//        shopsRef = FirebaseDatabase.getInstance().getReference().child(Constant.KEY_SHOP).orderByChild("countdown");
-//
-//        shopsRef = FirebaseDatabase.getInstance().getReference().child(Constant.KEY_SHOP).orderByChild("votes");
-
-
-        shopsRef.addValueEventListener(new ValueEventListener() {
+        mShopsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    Product shop = dataSnapshot1.getValue(Product.class);
+                    Shop shop = dataSnapshot1.getValue(Shop.class);
                     mShops.add(shop);
                 }
                 mShopAdapter.notifyDataSetChanged();

@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProductsActivity" />
-        <activity android:name=".UserActivity" />
+        <activity android:name=".AddActivity" />
         <activity
             android:name=".ScanBarcodeActivity"
             android:label="Scan barcode"/>
@@ -36,6 +36,7 @@
         <meta-data
             android:name="com.google.android.gms.vision.Detector"
             android:value="barcode"/>
+        <activity android:name=".UserActivity" />
     </application>
 
 </manifest>

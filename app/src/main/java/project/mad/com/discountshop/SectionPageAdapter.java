@@ -8,15 +8,29 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SectionPageAdapter
+ * add all AddActivity fragements to the top navigation of AddActivity
+ */
 public class SectionPageAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList = new ArrayList<>();
     private List<String> mFragmentTitleList = new ArrayList<>();
 
+    /**
+     * add fragements to a list
+     * add fragments' titles to a list
+     * @param fragment
+     * @param title
+     */
     public void addFragment(Fragment fragment, String title){
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }
 
+    /**
+     * save fragments and manage them in adapter
+     * @param fm
+     */
     public SectionPageAdapter(FragmentManager fm) {
         super(fm);
     }

@@ -43,9 +43,11 @@
                 android:text="@string/date"
                 android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/shop_date_et"
-                android:inputType="date"/>
+            <TextView
+                android:id="@+id/shop_date_tv"
+                android:text="@string/select_date"
+                android:textSize="20sp"/>
+
         </TableRow>
 
         <Button

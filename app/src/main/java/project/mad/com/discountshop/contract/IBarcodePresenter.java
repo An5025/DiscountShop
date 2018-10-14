@@ -1,4 +1,4 @@
-package project.mad.com.discountshop.presenter;
+package project.mad.com.discountshop.contract;
 
 public interface IBarcodePresenter {
 

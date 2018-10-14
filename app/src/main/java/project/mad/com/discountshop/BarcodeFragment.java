@@ -11,18 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
-import project.mad.com.discountshop.view.IBarcodeView;
+import project.mad.com.discountshop.contract.ISaveDataView;
 import project.mad.com.discountshop.impl.FirebaseBarcodePresenter;
 
-public class BarcodeFragment extends Fragment implements IBarcodeView{
+/**
+ * Barcode fragment
+ * use barcode scanner to scan barcode
+ * input barcode name, brand, capacity and save this barcode data to firebase
+ */
+public class BarcodeFragment extends Fragment implements ISaveDataView {
     private static final String TAG = "BarcodeFragment";
-    EditText mName, mCapacity, mBrand, mBarcode;
-    FirebaseBarcodePresenter mPresenter;
-    Button submit_btn, scan_btn;
+    private EditText mName, mCapacity, mBrand, mBarcode;
+    private FirebaseBarcodePresenter mPresenter;
+    private Button mSubmitBtn, mScanBtn;
     View mView;
 
     @Nullable
@@ -34,13 +40,13 @@ public class BarcodeFragment extends Fragment implements IBarcodeView{
         mName = view.findViewById(R.id.product_name_et);
         mBrand = view.findViewById(R.id.product_brand_et);
         mCapacity = view.findViewById(R.id.product_capacity_et);
-        submit_btn = view.findViewById(R.id.barcode_confirm_btn);
-        scan_btn = view.findViewById(R.id.scan_barcode_btn);
+        mSubmitBtn = view.findViewById(R.id.barcode_confirm_btn);
+        mScanBtn = view.findViewById(R.id.scan_barcode_btn);
         mPresenter = new FirebaseBarcodePresenter(this);
         mView = view;
 
 
-        submit_btn.setOnClickListener(new View.OnClickListener() {
+        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.input(
@@ -51,11 +57,11 @@ public class BarcodeFragment extends Fragment implements IBarcodeView{
             }
         });
 
-        scan_btn.setOnClickListener(new View.OnClickListener() {
+        mScanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ScanBarcodeActivity.class);
-                startActivityForResult(intent, Constant.KEY_CODE);
+                startActivityForResult(intent, Constants.KEY_CODE);
             }
         });
         return view;
@@ -63,13 +69,13 @@ public class BarcodeFragment extends Fragment implements IBarcodeView{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constant.KEY_CODE){
+        if (requestCode == Constants.KEY_CODE){
             if (resultCode == CommonStatusCodes.SUCCESS){
                 if (data != null){
-                    Barcode barcode = data.getParcelableExtra(Constant.KEY_BARCODE);
+                    Barcode barcode = data.getParcelableExtra(Constants.KEY_BARCODE);
                     mBarcode.setText(barcode.displayValue);
                 }else{
-                    mBarcode.setText(Constant.KEY_NO_BARCODE);
+                    mBarcode.setText(Constants.KEY_NO_BARCODE);
                 }
             }
         }else{
@@ -93,7 +99,12 @@ public class BarcodeFragment extends Fragment implements IBarcodeView{
     }
 
     @Override
-    public void barcodeInvalid() {
+    public void inputInvalid() {
         Snackbar.make(mView, R.string.input_invalid, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void databaseError() {
+        Toast.makeText(getActivity(), R.string.databaseError, Toast.LENGTH_SHORT).show();
     }
 }

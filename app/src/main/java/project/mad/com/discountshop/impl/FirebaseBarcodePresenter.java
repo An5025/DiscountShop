@@ -13,48 +13,57 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import project.mad.com.discountshop.Constant;
-import project.mad.com.discountshop.presenter.IBarcodePresenter;
-import project.mad.com.discountshop.view.IBarcodeView;
+import project.mad.com.discountshop.Constants;
+import project.mad.com.discountshop.contract.IBarcodePresenter;
+import project.mad.com.discountshop.contract.ISaveDataView;
 
+/**
+ * FirebaseBarcodePresenter
+ * save barcode fragment data to firebase
+ */
 public class FirebaseBarcodePresenter implements IBarcodePresenter{
+    private static final String TAG = "FirebaseBarcodePresente";
 
-    private IBarcodeView mIBarcodeView;
-    //private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-    //private String mUid = mUser.getUid();
+    private ISaveDataView mISaveDataView;
+//    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+//    private String mUid = mUser.getUid();
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference productRef = database.getReference(Constant.KEY_BARCODE);
-    //private DatabaseReference userRef = usersRef.child(mUid);
+    private DatabaseReference productRef = database.getReference(Constants.KEY_BARCODE);
 
-
-    public FirebaseBarcodePresenter(IBarcodeView IBarcodeView) {
-        mIBarcodeView = IBarcodeView;
+    /**
+     * FirebaseBarcodePresenter constructore
+     * initialize mISaveDataView
+     * @param ISaveDataView
+     */
+    public FirebaseBarcodePresenter(ISaveDataView ISaveDataView) {
+        mISaveDataView = ISaveDataView;
     }
 
     @Override
     public void input(String barcode, String name, String brand, String capacity) {
         if(TextUtils.isEmpty(barcode) || TextUtils.isEmpty(brand) || TextUtils.isEmpty(capacity) || TextUtils.isEmpty(name)){
-            mIBarcodeView.showValidationError();
+            mISaveDataView.showValidationError();
         }else{
             if(TextUtils.getTrimmedLength(barcode) < 10){
-                mIBarcodeView.barcodeInvalid();
+                mISaveDataView.inputInvalid();
             }else{
                 Map<String, Object> post = new HashMap<>();
-                post.put(Constant.KEY_BARCODE, barcode);
-                post.put(Constant.KEY_NAME, name);
-                post.put(Constant.KEY_BRAND, brand);
-                post.put(Constant.KEY_CAPACITY, capacity);
+                post.put(Constants.KEY_BARCODE, barcode);
+                post.put(Constants.KEY_NAME, name);
+                post.put(Constants.KEY_BRAND, brand);
+                post.put(Constants.KEY_CAPACITY, capacity);
+               // post.put(Constants.KEY_UID, mUid);
                 productRef.push().setValue(post); //should be userRef
                 productRef.addValueEventListener(new ValueEventListener() {//should be userRef
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        mIBarcodeView.inputSuccess();
+                        mISaveDataView.inputSuccess();
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        mIBarcodeView.inputError();
-                        Log.e("onCancelled: ", databaseError.toString());
+                        mISaveDataView.inputError();
+                        Log.d(TAG, databaseError.toString());
                     }
                 });
             }

@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,24 +17,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import project.mad.com.discountshop.Constant;
-import project.mad.com.discountshop.presenter.IDiscountShopPresenter;
-import project.mad.com.discountshop.Product;
-import project.mad.com.discountshop.Shop;
-import project.mad.com.discountshop.view.IDiscountShopView;
+import project.mad.com.discountshop.Constants;
+import project.mad.com.discountshop.contract.IDiscountShopPresenter;
+import project.mad.com.discountshop.data.Product;
+import project.mad.com.discountshop.data.Shop;
+import project.mad.com.discountshop.contract.ISaveDataView;
 
-public class FirebaseShopDiscountPresenter implements IDiscountShopPresenter{
-
-    private IDiscountShopView mIDiscountShopView;
-    //private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-    //private String mUid = mUser.getUid();
+/**
+ * FirebaseShopPresenter
+ * save shop fragment data to firebase
+ */
+public class FirebaseShopPresenter implements IDiscountShopPresenter{
+    private static final String TAG = "FirebaseShopPresenter";
+    private ISaveDataView mIDiscountShopView;
+    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+//    private String mUid = mUser.getUid();
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference shopRef = database.getReference(Constant.KEY_SHOP);
-    //private DatabaseReference userRef = usersRef.child(mUid);
+    private DatabaseReference shopRef = database.getReference(Constants.KEY_SHOP);
     private ArrayList<Shop> mShops = new ArrayList<Shop>();
     Query shopsRef;
 
-    public FirebaseShopDiscountPresenter(IDiscountShopView IDiscountShopView) {
+    /**
+     * FirebaseShopPresenter constructor
+     * initialize mIDiscountShopView
+     * @param IDiscountShopView
+     */
+    public FirebaseShopPresenter(ISaveDataView IDiscountShopView) {
         mIDiscountShopView = IDiscountShopView;
     }
 
@@ -40,13 +50,14 @@ public class FirebaseShopDiscountPresenter implements IDiscountShopPresenter{
     public void input(String name, Integer discount, String date) {
         if(TextUtils.isEmpty(name) || TextUtils.isEmpty(discount.toString()) || TextUtils.isEmpty(date)){
             mIDiscountShopView.showValidationError();
-        }else if (discount>0 && discount<100){
+        }else if (discount>Constants.KEY_MIN && discount<Constants.KEY_MAX){
             Map<String, Object> post = new HashMap<>();
-            post.put(Constant.KEY_NAME, name);
-            post.put(Constant.KEY_DISCOUNT, discount);
-            post.put(Constant.KEY_DATE, date);
-            shopRef.push().setValue(post); //should be userRef
-            shopRef.addValueEventListener(new ValueEventListener() {//should be userRef
+            post.put(Constants.KEY_NAME, name);
+            post.put(Constants.KEY_DISCOUNT, discount);
+            post.put(Constants.KEY_DATE, date);
+//            post.put("user", mUid);
+            shopRef.push().setValue(post);
+            shopRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     mIDiscountShopView.inputSuccess();
@@ -55,17 +66,17 @@ public class FirebaseShopDiscountPresenter implements IDiscountShopPresenter{
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     mIDiscountShopView.inputError();
-                    Log.e("onCancelled: ", databaseError.toString());
+                    Log.d(TAG, databaseError.toString());
                 }
             });
         }else{
-            mIDiscountShopView.discountInvalid();
+            mIDiscountShopView.inputInvalid();
         }
     }
 
     @Override
     public ArrayList<Shop> getFirebaseData() {
-        shopsRef = FirebaseDatabase.getInstance().getReference().child(Constant.KEY_SHOP).orderByChild("votes");
+        shopsRef = FirebaseDatabase.getInstance().getReference().child(Constants.KEY_SHOP).orderByChild("votes");
         shopsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -73,12 +84,11 @@ public class FirebaseShopDiscountPresenter implements IDiscountShopPresenter{
                     Product shop = dataSnapshot1.getValue(Product.class);
                     mShops.add(shop);
                 }
-  //              mShopAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
- //               Snackbar.make(mView, getString(R.string.onCancelled), Snackbar.LENGTH_SHORT).show();
+                mIDiscountShopView.showValidationError();
             }
         });
 

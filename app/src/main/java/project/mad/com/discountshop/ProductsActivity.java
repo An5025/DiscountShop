@@ -23,11 +23,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import project.mad.com.discountshop.data.Product;
+
+/**
+ * ProductsActivity
+ * retrieve all products' mDiscount2 information
+ * dispaly them by recyclerview
+ */
 public class ProductsActivity extends AppCompatActivity {
     RecyclerView mProductRecyclerView;
     private ArrayList<Product> mProducts = new ArrayList<Product>();
     private ProductsAdapter mProductsAdapter;
-    Query productsRef;
+    Query mProductsRef;
     View mView;
 
     @Override
@@ -36,7 +43,11 @@ public class ProductsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_products);
 
         BottomNavigationView bottomNav = findViewById(R.id.navigation_bar);
+        BottomNavigationViewHelper.disableShiftMode(bottomNav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+        Menu mMenu = bottomNav.getMenu();
+        MenuItem menuItem = mMenu.getItem(1);
+        menuItem.setChecked(true);
 
         mProductRecyclerView = findViewById(R.id.productsRecyclerView);
         mProductRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -48,6 +59,10 @@ public class ProductsActivity extends AppCompatActivity {
         getDataFirebase();
     }
 
+    /**
+     * this method setup four activities at the bottom navigation
+     * control the activityies' shifting
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new
             BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -60,9 +75,13 @@ public class ProductsActivity extends AppCompatActivity {
                             break;
                         case R.id.bottom_product:
                             break;
-                        case R.id.bottom_user:
-                            Intent intent3 = new Intent(ProductsActivity.this, UserActivity.class);
+                        case R.id.bottom_add_info:
+                            Intent intent3 = new Intent(ProductsActivity.this, AddActivity.class);
                             startActivity(intent3);
+                            break;
+                        case R.id.bottom_user:
+                            Intent intent4 = new Intent(ProductsActivity.this, UserActivity.class);
+                            startActivity(intent4);
                             break;
 
                     }
@@ -76,9 +95,12 @@ public class ProductsActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * use products reference to get product information and save then to a list
+     */
     void getDataFirebase(){
-        productsRef = FirebaseDatabase.getInstance().getReference().child(Constant.KEY_PRODUCT);
-        productsRef.addValueEventListener(new ValueEventListener() {
+        mProductsRef = FirebaseDatabase.getInstance().getReference().child(Constants.KEY_PRODUCT);
+        mProductsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){

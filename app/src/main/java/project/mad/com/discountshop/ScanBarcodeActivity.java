@@ -20,9 +20,16 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
+/**
+ * ScanBarcodeActivity
+ * use camera scan barcode and save it
+ * pass barcode value to barcode fragment
+ */
 public class ScanBarcodeActivity extends Activity {
-    SurfaceView mCameraPreview;
     private static final String TAG = "ScanBarcodeActivity";
+    private SurfaceView mCameraPreview;
+    private int mSizeWidth = 1024;
+    private int mSizeheight = 1600;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,11 +39,15 @@ public class ScanBarcodeActivity extends Activity {
         createCameraSource();
     }
 
+    /**
+     * create camera screen to use mobile camera
+     * set camera function
+     */
     public void createCameraSource() {
         BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).build();
         final CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)
-                .setRequestedPreviewSize(1600, 1024)
+                .setRequestedPreviewSize(mSizeheight, mSizeWidth)
                 .build();
 
         mCameraPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -44,12 +55,6 @@ public class ScanBarcodeActivity extends Activity {
             public void surfaceCreated(SurfaceHolder holder) {
                 if (ActivityCompat.checkSelfPermission(ScanBarcodeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 try {
@@ -69,10 +74,14 @@ public class ScanBarcodeActivity extends Activity {
                 cameraSource.stop();
             }
         });
+
+        /**
+         * use camera detect barcode, store it and pass it to barcodeFragment
+         */
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-
+                //do nothing
             }
 
             @Override
@@ -80,8 +89,8 @@ public class ScanBarcodeActivity extends Activity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size()>0){
                     Intent intent = new Intent();
-                    intent.putExtra(Constant.KEY_BARCODE, barcodes.valueAt(0));
-                    Log.d(TAG, "receiveDetections:"+intent);
+                    intent.putExtra(Constants.KEY_BARCODE, barcodes.valueAt(0));
+                    Log.d(TAG, getString(R.string.barcodeDetection) +intent);
                     setResult(CommonStatusCodes.SUCCESS, intent);
                     finish();
                 }
