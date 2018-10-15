@@ -15,7 +15,7 @@ import java.util.Map;
 
 import project.mad.com.discountshop.Constants;
 import project.mad.com.discountshop.contract.IBarcodePresenter;
-import project.mad.com.discountshop.contract.ISaveDataView;
+import project.mad.com.discountshop.contract.IBarcodeView;
 
 /**
  * FirebaseBarcodePresenter
@@ -23,10 +23,7 @@ import project.mad.com.discountshop.contract.ISaveDataView;
  */
 public class FirebaseBarcodePresenter implements IBarcodePresenter{
     private static final String TAG = "FirebaseBarcodePresente";
-
-    private ISaveDataView mISaveDataView;
-//    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-//    private String mUid = mUser.getUid();
+    private IBarcodeView mISaveDataView;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference productRef = database.getReference(Constants.KEY_BARCODE);
 
@@ -35,9 +32,10 @@ public class FirebaseBarcodePresenter implements IBarcodePresenter{
      * initialize mISaveDataView
      * @param ISaveDataView
      */
-    public FirebaseBarcodePresenter(ISaveDataView ISaveDataView) {
+    public FirebaseBarcodePresenter(IBarcodeView ISaveDataView) {
         mISaveDataView = ISaveDataView;
     }
+
 
     @Override
     public void input(String barcode, String name, String brand, String capacity) {

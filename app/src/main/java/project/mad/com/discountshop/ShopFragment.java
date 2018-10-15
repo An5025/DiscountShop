@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,14 +19,14 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import project.mad.com.discountshop.contract.ISaveDataView;
+import project.mad.com.discountshop.contract.IShopView;
 import project.mad.com.discountshop.impl.FirebaseShopPresenter;
 
 /**
  * ShopFragment
  * user can input shop discount information and save them into firebase
  */
-public class ShopFragment extends Fragment implements ISaveDataView{
+public class ShopFragment extends Fragment implements IShopView{
     private static final String TAG = "ProductFragment";
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
     FirebaseShopPresenter mPresenter;
@@ -59,7 +58,7 @@ public class ShopFragment extends Fragment implements ISaveDataView{
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         getActivity(),
-                        android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth,
+                        android.R.style.Theme_Holo_Dialog_MinWidth,
                         mOnDateSetListener,
                         year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -79,7 +78,11 @@ public class ShopFragment extends Fragment implements ISaveDataView{
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                discount = Integer.parseInt(mDiscount.getText().toString().trim());
+                try {
+                    discount = Integer.parseInt(mDiscount.getText().toString().trim());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 mPresenter.input(mName.getText().toString().trim(), discount,
                                 mDate.getText().toString().trim());
             }
@@ -89,17 +92,20 @@ public class ShopFragment extends Fragment implements ISaveDataView{
 
     @Override
     public void showValidationError() {
-        Snackbar.make(mView, R.string.input_invalid, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_invalid, Toast.LENGTH_SHORT ).show();
     }
 
     @Override
     public void inputSuccess() {
-        Snackbar.make(mView, R.string.input_success, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_success, Toast.LENGTH_SHORT ).show();
+        mName.setText(getString(R.string.empty));
+        mDiscount.setText(getString(R.string.empty));
+        mDate.setText(getString(R.string.empty));
     }
 
     @Override
     public void inputError() {
-        Snackbar.make(mView, R.string.input_error, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_error, Toast.LENGTH_SHORT ).show();
     }
 
     @Override
@@ -111,4 +117,5 @@ public class ShopFragment extends Fragment implements ISaveDataView{
     public void databaseError() {
         Toast.makeText(getActivity(), R.string.databaseError, Toast.LENGTH_SHORT).show();
     }
+
 }

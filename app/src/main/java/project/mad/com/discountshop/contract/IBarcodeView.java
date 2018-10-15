@@ -1,16 +1,15 @@
 package project.mad.com.discountshop.contract;
 
 /**
- * IProductView
- * provide methods for product fragments
+ * ISaveDataView
+ * provide methods for barcode, shop, product fragments
  * show input messages
  */
-public interface ISaveDataView {
+public interface IBarcodeView {
 
     void showValidationError();
     void inputSuccess();
     void inputError();
     void inputInvalid();
     void databaseError();
-    void showModelData(String name, String brand, String capacity);
 }

@@ -19,9 +19,9 @@ import java.util.Map;
 
 import project.mad.com.discountshop.Constants;
 import project.mad.com.discountshop.contract.IDiscountShopPresenter;
+import project.mad.com.discountshop.contract.IShopView;
 import project.mad.com.discountshop.data.Product;
 import project.mad.com.discountshop.data.Shop;
-import project.mad.com.discountshop.contract.ISaveDataView;
 
 /**
  * FirebaseShopPresenter
@@ -29,7 +29,7 @@ import project.mad.com.discountshop.contract.ISaveDataView;
  */
 public class FirebaseShopPresenter implements IDiscountShopPresenter{
     private static final String TAG = "FirebaseShopPresenter";
-    private ISaveDataView mIDiscountShopView;
+    private IShopView mIDiscountShopView;
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 //    private String mUid = mUser.getUid();
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -42,7 +42,7 @@ public class FirebaseShopPresenter implements IDiscountShopPresenter{
      * initialize mIDiscountShopView
      * @param IDiscountShopView
      */
-    public FirebaseShopPresenter(ISaveDataView IDiscountShopView) {
+    public FirebaseShopPresenter(IShopView IDiscountShopView) {
         mIDiscountShopView = IDiscountShopView;
     }
 

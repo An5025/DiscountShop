@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -23,10 +24,11 @@ import project.mad.com.discountshop.contract.ISaveDataView;
  * save product fragment data to firebase
  */
 public class FirebaseProductPresenter implements IDiscountPresenter{
-
+    private static final String TAG = "FirebaseProductPresente";
     private ISaveDataView mIDiscountView;
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 //    private String mUid = mUser.getUid();
+    private Query mSearchBarcode;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference productRef = database.getReference(Constants.KEY_PRODUCT);
 
@@ -42,10 +44,8 @@ public class FirebaseProductPresenter implements IDiscountPresenter{
     @Override
     public void input(String name, String brand, String capacity, Integer discount, String date) {
         if(TextUtils.isEmpty(name) || TextUtils.isEmpty(brand) || TextUtils.isEmpty(capacity)
-                || TextUtils.isEmpty(String.valueOf(discount)) || TextUtils.isEmpty(date)){
-
+                || String.valueOf(discount).isEmpty() || TextUtils.isEmpty(date)){
             mIDiscountView.showValidationError();
-
         }else if (discount>Constants.KEY_MIN && discount<Constants.KEY_MAX){
 
             Map<String, Object> post = new HashMap<>();
@@ -55,8 +55,8 @@ public class FirebaseProductPresenter implements IDiscountPresenter{
             post.put(Constants.KEY_DISCOUNT, discount);
             post.put(Constants.KEY_DATE, date);
 //            post.put(Constants.KEY_UID, mUid);
-            productRef.push().setValue(post); //should be userRef
-            productRef.addValueEventListener(new ValueEventListener() {//should be userRef
+            productRef.push().setValue(post);
+            productRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     mIDiscountView.inputSuccess();
@@ -65,11 +65,32 @@ public class FirebaseProductPresenter implements IDiscountPresenter{
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     mIDiscountView.inputError();
-                    Log.e("onCancelled: ", databaseError.toString());
+                    Log.e(TAG, databaseError.toString());
                 }
             });
         }else{
             mIDiscountView.inputInvalid();
         }
+    }
+
+    @Override
+    public void searchBarcode(final String barcode) {
+        mSearchBarcode = database.getReference(Constants.KEY_BARCODE).orderByChild(Constants.KEY_BARCODE).equalTo(barcode);
+        mSearchBarcode.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot barcodeModel: dataSnapshot.getChildren()){
+                    String bName = barcodeModel.child(Constants.KEY_NAME).getValue().toString();
+                    String bCapacity = barcodeModel.child(Constants.KEY_CAPACITY).getValue().toString();
+                    String bBrand = barcodeModel.child(Constants.KEY_BRAND).getValue().toString();
+                    mIDiscountView.showModelData(bName, bBrand, bCapacity);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

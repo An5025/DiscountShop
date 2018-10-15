@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +20,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
-import com.google.firebase.database.Query;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 
@@ -35,14 +35,14 @@ import project.mad.com.discountshop.impl.FirebaseProductPresenter;
  * user only need to fill discount number and expiry date
  * Or user can input product discount information, product name, brand, capacity, discount and exxpiry date
  */
-public class ProductFragment extends Fragment implements ISaveDataView{
+public class ProductFragment extends Fragment implements ISaveDataView {
     private static final String TAG = "ProductFragment";
     EditText mName, mCapacity, mBrand, mDiscount;
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
+    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseProductPresenter mPresenter;
     Button mSubmit_btn, mScan_btn;
     String mBarcodeValue;
-    Query mSearchBarcode;
     TextView mDate;
     int mDiscount2;
     View mView;
@@ -52,7 +52,6 @@ public class ProductFragment extends Fragment implements ISaveDataView{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.product_fragment, container, false);
-
 
         mName = view.findViewById(R.id.name_et);
         mBrand = view.findViewById(R.id.brand_et);
@@ -64,12 +63,14 @@ public class ProductFragment extends Fragment implements ISaveDataView{
         mPresenter = new FirebaseProductPresenter(this);
         mView = view;
 
-
-
         mSubmit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDiscount2 = Integer.parseInt(mDiscount.getText().toString().trim());
+                try {
+                    mDiscount2 = Integer.parseInt(mDiscount.getText().toString().trim());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 mPresenter.input(mName.getText().toString().trim(),
                         mBrand.getText().toString().trim(),
                         mCapacity.getText().toString().trim(), mDiscount2,
@@ -88,7 +89,7 @@ public class ProductFragment extends Fragment implements ISaveDataView{
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         getActivity(),
-                        android.R.style.Theme_DeviceDefault_Light_Dialog_MinWidth,
+                        android.R.style.Theme_Holo_Dialog_MinWidth,
                         mOnDateSetListener,
                         year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -99,8 +100,8 @@ public class ProductFragment extends Fragment implements ISaveDataView{
         mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                 Log.d(TAG,  year + getString(R.string.slash) + month + getString(R.string.slash)+ dayOfMonth);
-                String date = getString(R.string.space)+dayOfMonth + getString(R.string.slash)+ month + getString(R.string.slash)+ year;
+                Log.d(TAG, year + getString(R.string.slash) + month + getString(R.string.slash) + dayOfMonth);
+                String date = getString(R.string.space) + dayOfMonth + getString(R.string.slash) + month + getString(R.string.slash) + year;
                 mDate.setText(date);
             }
         };
@@ -110,6 +111,7 @@ public class ProductFragment extends Fragment implements ISaveDataView{
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ScanBarcodeActivity.class);
                 startActivityForResult(intent, Constants.KEY_CODE);
+
             }
         });
         return view;
@@ -117,33 +119,39 @@ public class ProductFragment extends Fragment implements ISaveDataView{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.KEY_CODE){
-            if (resultCode == CommonStatusCodes.SUCCESS){
-                if (data != null){
+        if (requestCode == Constants.KEY_CODE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
                     Barcode barcode = data.getParcelableExtra(Constants.KEY_BARCODE);
                     mBarcodeValue = barcode.displayValue;
-                }else{
-                    Snackbar.make(mView, Constants.KEY_NO_BARCODE, Snackbar.LENGTH_SHORT).show();
+                    mPresenter.searchBarcode(mBarcodeValue);
+                } else {
+                    Toast.makeText(getActivity(), R.string.no_barcode, Toast.LENGTH_SHORT ).show();
                 }
             }
-        }else{
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
     @Override
     public void showValidationError() {
-        Snackbar.make(mView, R.string.input_invalid, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_invalid, Toast.LENGTH_SHORT ).show();
     }
 
     @Override
     public void inputSuccess() {
-        Snackbar.make(mView, R.string.input_success, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_success, Toast.LENGTH_SHORT ).show();
+        mName.setText(getString(R.string.empty));
+        mBrand.setText(getString(R.string.empty));
+        mCapacity.setText(getString(R.string.empty));
+        mDate.setText(getString(R.string.empty));
+        mDiscount.setText(getString(R.string.empty));
     }
 
     @Override
     public void inputError() {
-        Snackbar.make(mView, R.string.input_error, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_error, Toast.LENGTH_SHORT ).show();
     }
 
     @Override
@@ -154,6 +162,13 @@ public class ProductFragment extends Fragment implements ISaveDataView{
     @Override
     public void databaseError() {
         Toast.makeText(getActivity(), R.string.databaseError, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showModelData(String name, String brand, String capacity) {
+        mName.setText(name);
+        mBrand.setText(brand);
+        mCapacity.setText(capacity);
     }
 
 }

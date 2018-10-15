@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
-import project.mad.com.discountshop.contract.ISaveDataView;
+import project.mad.com.discountshop.contract.IBarcodeView;
 import project.mad.com.discountshop.impl.FirebaseBarcodePresenter;
 
 /**
@@ -24,7 +23,7 @@ import project.mad.com.discountshop.impl.FirebaseBarcodePresenter;
  * use barcode scanner to scan barcode
  * input barcode name, brand, capacity and save this barcode data to firebase
  */
-public class BarcodeFragment extends Fragment implements ISaveDataView {
+public class BarcodeFragment extends Fragment implements IBarcodeView {
     private static final String TAG = "BarcodeFragment";
     private EditText mName, mCapacity, mBrand, mBarcode;
     private FirebaseBarcodePresenter mPresenter;
@@ -75,7 +74,7 @@ public class BarcodeFragment extends Fragment implements ISaveDataView {
                     Barcode barcode = data.getParcelableExtra(Constants.KEY_BARCODE);
                     mBarcode.setText(barcode.displayValue);
                 }else{
-                    mBarcode.setText(Constants.KEY_NO_BARCODE);
+                    mBarcode.setText(getString(R.string.no_barcode));
                 }
             }
         }else{
@@ -85,26 +84,30 @@ public class BarcodeFragment extends Fragment implements ISaveDataView {
 
     @Override
     public void showValidationError() {
-        Snackbar.make(mView, R.string.input_error, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_invalid, Toast.LENGTH_SHORT ).show();
     }
 
     @Override
     public void inputSuccess() {
-        Snackbar.make(mView, R.string.input_success, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_success, Toast.LENGTH_SHORT ).show();
+        mBarcode.setText(getString(R.string.empty));
+        mName.setText(getString(R.string.empty));
+        mBrand.setText(getString(R.string.empty));
+        mCapacity.setText(getString(R.string.empty));
     }
 
     @Override
     public void inputError() {
-        Snackbar.make(mView, R.string.input_success, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_success, Toast.LENGTH_SHORT ).show();
     }
 
     @Override
     public void inputInvalid() {
-        Snackbar.make(mView, R.string.input_invalid, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.input_invalid, Toast.LENGTH_SHORT ).show();
     }
 
     @Override
     public void databaseError() {
-        Toast.makeText(getActivity(), R.string.databaseError, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.databaseError, Toast.LENGTH_SHORT ).show();
     }
 }
