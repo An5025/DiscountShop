@@ -19,8 +19,8 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
     /**
      * add fragements to a list
      * add fragments' titles to a list
-     * @param fragment
-     * @param title
+     * @param fragment fragments of AddActivity(top navigation)
+     * @param title titles of fragments
      */
     public void addFragment(Fragment fragment, String title){
         mFragmentList.add(fragment);
@@ -29,7 +29,7 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
 
     /**
      * save fragments and manage them in adapter
-     * @param fm
+     * @param fm fragment manager
      */
     public SectionPageAdapter(FragmentManager fm) {
         super(fm);

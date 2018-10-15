@@ -18,17 +18,17 @@ import project.mad.com.discountshop.data.Shop;
  * set the shops from array to recyclerview
  */
 public class ShopsAdapter extends RecyclerView.Adapter<ShopsAdapter.ShopsViewHolder> {
-    List<Shop> ShopsArray;
+    public List<Shop> shopsArray;
     private Context mContext;
 
     /**
      * ShopsAdapter Constructor
      * initialize array and context
-     * @param shops
+     * @param shops arraylist
      * @param context
      */
     public ShopsAdapter(ArrayList<Shop> shops, Context context) {
-        ShopsArray = shops;
+        shopsArray = shops;
         mContext = context;
     }
 
@@ -42,7 +42,7 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopsAdapter.ShopsViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ShopsViewHolder holder, int position) {
-        Shop shop = ShopsArray.get(position);
+        Shop shop = shopsArray.get(position);
         holder.shop_name.setText(shop.getName());
         holder.shop_date.setText(shop.getDate());
         holder.shop_discount.setText(String.format(mContext.getString(R.string.integer), shop.getDiscount()));
@@ -50,7 +50,7 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopsAdapter.ShopsViewHol
 
     @Override
     public int getItemCount() {
-        return ShopsArray.size();
+        return shopsArray.size();
     }
 
     public class ShopsViewHolder extends RecyclerView.ViewHolder {

@@ -29,12 +29,12 @@ import project.mad.com.discountshop.impl.FirebaseShopPresenter;
 public class ShopFragment extends Fragment implements IShopView{
     private static final String TAG = "ProductFragment";
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
-    FirebaseShopPresenter mPresenter;
-    EditText mName, mDiscount;
-    TextView  mDate;
-    int discount;
-    Button submit_btn;
-    View mView;
+    private FirebaseShopPresenter mPresenter;
+    private EditText mName, mDiscount;
+    private TextView  mDate;
+    private int discount;
+    private Button submit_btn;
+    private View mView;
 
     @Nullable
     @Override
@@ -48,6 +48,7 @@ public class ShopFragment extends Fragment implements IShopView{
         mPresenter = new FirebaseShopPresenter(this);
         mView = view;
 
+        //click to select expiry date
         mDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

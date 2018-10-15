@@ -3,7 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:layout_marginVertical="5dp"
+    android:background="@drawable/shap"
+    android:gravity="center"
+    android:padding="5dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/pr_name_layout"
@@ -14,15 +18,14 @@
             android:text="@string/product_name_r"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/orange"
-            android:textStyle="bold"/>
+            android:textColor="@color/pink"
+            android:textSize="16dp"/>
         <TextView
             android:id="@+id/prduct_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/product_name"
-            android:textSize="20sp"
+            android:textSize="15sp"
             />
     </LinearLayout>
 
@@ -35,16 +38,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/brand_r"
-            android:textSize="20sp"
-            android:textColor="@color/orange"
-            android:textStyle="bold"/>
+            android:textColor="@color/pink"
+            android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/pr_brand_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/product_name"
-            android:textSize="20sp"/>
+            android:textSize="15sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -56,88 +58,71 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/capacity_r"
-            android:textSize="20sp"
-            android:textColor="@color/orange"
-            android:textStyle="bold"/>
+            android:textColor="@color/pink"
+            android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/pr_capacity_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/product_name"
-            android:textSize="20sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/pr_disc_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pr_capacity_layout"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/discount_off"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/orange"/>
-
-        <TextView
-            android:id="@+id/product_disc_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/_30"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/off"
-            android:textSize="20sp"/>
+            android:textSize="15sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/pr_count_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/pr_disc_layout">
+        android:layout_below="@id/pr_capacity_layout"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/pr_disc_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/discount_off"
+                android:textColor="@color/pink"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/product_disc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_30"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/off"
+                android:textSize="16sp" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/linearlayout2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="2"
-            android:layout_width="0dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/date_view"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/orange"/>
+                android:textColor="@color/pink"
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/pr_date_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_8"
-                android:textSize="20sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/product_vote_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/pr_vote_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/upvote"
-                android:drawableLeft="@drawable/ic_thumb_up_black_24dp"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -3,9 +3,9 @@
     <string name="product">Products</string>
     <string name="me">Me</string>
     <string name="shop">Shops</string>
-    <string name="order_by_date">Order by countdown</string>
+    <string name="order_by_brand">Order by brand</string>
     <string name="order_by_discount">Order by discount</string>
-    <string name="order_by_credit">Order by credit</string>
+    <string name="order_by_name">Order by name</string>
     <string name="your_credit">Your credit</string>
     <string name="logout">Logout</string>
     <string name="add_a_barcode">Add a barcode</string>
@@ -34,7 +34,7 @@
     <string name="upvote">66</string>
     <string name="_8">8</string>
     <string name="_30">30</string>
-    <string name="date_view">Expiry date: " "</string>
+    <string name="date_view">Until: " "</string>
     <string name="shop_name">Shop Name:" "</string>
     <string name="discount_off">Discount:" "</string>
     <string name="integer">%d</string>
@@ -48,6 +48,7 @@
     <string name="input_error">Input error</string>
     <string name="input_success">Input success</string>
     <string name="input_invalid">Input is invalid</string>
+    <string name="barcode_exist">Barcode exist</string>
     <string name="discount_invalid">Discount number is invalid</string>
     <string name="sign_out">Sign out</string>
     <string name="user_name">user name</string>
@@ -60,5 +61,6 @@
     <string name="space">"  "</string>
     <string name="empty">""</string>
     <string name="slash">/</string>
+    <string name="pager_tag">onCreate: starting</string>
 
 </resources>

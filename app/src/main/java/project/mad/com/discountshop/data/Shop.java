@@ -12,7 +12,7 @@ public class Shop {
 
     /**
      * Shop constructor
-     * initialize variables
+     * initialize all shop variables
      * @param name
      * @param discount
      * @param date

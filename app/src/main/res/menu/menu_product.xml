@@ -4,15 +4,21 @@
     tools:context="project.mad.com.discountshop.Activities.MainActivity">
 
     <item
-        android:id="@+id/orderByDiscount"
+        android:id="@+id/orderByProductDiscount"
         android:orderInCategory="101"
         android:title="@string/order_by_discount"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/orderByName"
+        android:id="@+id/orderByProductName"
         android:orderInCategory="101"
         android:title="@string/order_by_name"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/orderByProductBrand"
+        android:orderInCategory="101"
+        android:title="@string/order_by_brand"
         app:showAsAction="never" />
 
 </menu>

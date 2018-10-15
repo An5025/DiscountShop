@@ -5,16 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShopsActivity">
+    tools:context=".ProductsActivity">
 
     <RelativeLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/top_nav"
+        android:layout_alignParentTop="true"
         android:layout_margin="10dp"
         android:layout_above="@+id/navigation_bar"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginHorizontal="5dp">
+
+        <ProgressBar
+            android:id="@+id/product_progress"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:progress="@integer/google_play_services_version"
+            android:progressDrawable="@drawable/circle"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

@@ -48,14 +48,18 @@ public class BarcodeFragment extends Fragment implements IBarcodeView {
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.input(
-                        mBarcode.getText().toString().trim(),
-                        mName.getText().toString().trim(),
-                        mBrand.getText().toString().trim(),
-                        mCapacity.getText().toString().trim());
+                mPresenter.searchBarcode(mBarcode.getText().toString().trim());
+                if (mPresenter.isExist != null) {
+                    mPresenter.input(
+                            mBarcode.getText().toString().trim(),
+                            mName.getText().toString().trim(),
+                            mBrand.getText().toString().trim(),
+                            mCapacity.getText().toString().trim());
+                }
             }
         });
 
+        //scan barcode
         mScanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +108,14 @@ public class BarcodeFragment extends Fragment implements IBarcodeView {
     @Override
     public void inputInvalid() {
         Toast.makeText(getActivity(), R.string.input_invalid, Toast.LENGTH_SHORT ).show();
+    }
+
+    /**
+     * if barcode exist, user cannot add it again
+     */
+    @Override
+    public void exist() {
+        Toast.makeText(getActivity(), R.string.barcode_exist, Toast.LENGTH_SHORT ).show();
     }
 
     @Override

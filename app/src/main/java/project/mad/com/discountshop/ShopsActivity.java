@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,8 +36,9 @@ public class ShopsActivity extends AppCompatActivity {
     private RecyclerView mShopRecyclerView;
     private ArrayList<Shop> mShops = new ArrayList<Shop>();
     private ShopsAdapter mShopAdapter;
-    Query mShopsRef;
-    View mView;
+    private ProgressBar mProgressBar;
+    private Query mShopsRef;
+    private View mView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,11 @@ public class ShopsActivity extends AppCompatActivity {
         mShopRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mShopRecyclerView.setAdapter(mShopAdapter);
         mShopRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        getDataFirebase();
+        mProgressBar = findViewById(R.id.shop_progress);
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        mShopsRef = FirebaseDatabase.getInstance().getReference().child(Constants.KEY_SHOP);
+        getDataFirebase(mShopsRef);
     }
 
     /**
@@ -105,11 +110,13 @@ public class ShopsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.orderByDiscount) {
-            Toast.makeText(this, "click 1", Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.orderByDate) {
-            Toast.makeText(this, "click 2", Toast.LENGTH_SHORT).show();
-        }else if (id == R.id.orderByCredit) {
-            Toast.makeText(this, "click 3", Toast.LENGTH_SHORT).show();
+            //order recyclerview by discount number
+            destroyArray();
+            getDataFirebase(mShopsRef.orderByChild(Constants.KEY_DISCOUNT));
+        }else if (id == R.id.orderByName) {
+            //order recyclerview by shop name
+            destroyArray();
+            getDataFirebase(mShopsRef.orderByChild(Constants.KEY_NAME));
         }
 
         return super.onOptionsItemSelected(item);
@@ -118,10 +125,8 @@ public class ShopsActivity extends AppCompatActivity {
     /**
      * use shops reference to get shop information and save then to a list
      */
-    void getDataFirebase(){
-        mShopsRef = FirebaseDatabase.getInstance().getReference().child(Constants.KEY_SHOP);
-
-        mShopsRef.addValueEventListener(new ValueEventListener() {
+    private void getDataFirebase(Query shopsRef){
+        shopsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
@@ -129,6 +134,7 @@ public class ShopsActivity extends AppCompatActivity {
                     mShops.add(shop);
                 }
                 mShopAdapter.notifyDataSetChanged();
+                mProgressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -136,5 +142,13 @@ public class ShopsActivity extends AppCompatActivity {
                 Snackbar.make(mView, getString(R.string.error), Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * destroy current recyclerview array
+     */
+    private void destroyArray(){
+        mShopAdapter.shopsArray.clear();
+        mShopAdapter.notifyDataSetChanged();
     }
 }

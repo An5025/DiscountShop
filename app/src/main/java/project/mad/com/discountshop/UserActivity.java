@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,10 +30,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 /**
  * UserActivity
- * user can login and logout in this activity
+ * user can login use google account and logout in this activity
  */
 public class UserActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-
     private FirebaseAuth mAuth;
     private GoogleSignInOptions mGoogleSignInOptions;
     private GoogleApiClient mGoogleApiClient;
@@ -41,12 +41,14 @@ public class UserActivity extends AppCompatActivity implements GoogleApiClient.O
     private TextView mUserName, mUserEmail;
     private ImageView mUserPhoto;
     private RelativeLayout mUserLayout;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        //set bottom navigation bar
         BottomNavigationView bottomNav = findViewById(R.id.navigation_bar);
         BottomNavigationViewHelper.disableShiftMode(bottomNav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -61,9 +63,12 @@ public class UserActivity extends AppCompatActivity implements GoogleApiClient.O
         mUserEmail = findViewById(R.id.user_email);
         mUserPhoto = findViewById(R.id.photo);
         mUserLayout = findViewById(R.id.user_layout);
+        mProgressBar = findViewById(R.id.user_progress);
+        mProgressBar.setVisibility(View.INVISIBLE);
         mUserLayout.setVisibility(View.GONE);
         mSignOutBtn.setVisibility(View.GONE);
 
+        //build google login options dialog
         mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
@@ -74,6 +79,7 @@ public class UserActivity extends AppCompatActivity implements GoogleApiClient.O
             @Override
             public void onClick(View v) {
                 signIn();
+                mProgressBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -120,7 +126,7 @@ public class UserActivity extends AppCompatActivity implements GoogleApiClient.O
      * get user name, email, photo from result
      * set all data to corresponding textviews or imageview
      * invoke updateUi method to update ui
-     * @param result
+     * @param result all user information
      */
     private void handleResult(GoogleSignInResult result){
         if (result.isSuccess()) {
@@ -141,9 +147,10 @@ public class UserActivity extends AppCompatActivity implements GoogleApiClient.O
     /**
      * if user logged in the login button will be invisible
      * if user logged out the user information and logout buttion will be invisible
-     * @param isLogin
+     * @param isLogin true for user logged in
      */
     private void updatUi(boolean isLogin) {
+        mProgressBar.setVisibility(View.INVISIBLE);
         if (isLogin){
             mSignInButton.setVisibility(View.GONE);
             mUserLayout.setVisibility(View.VISIBLE);

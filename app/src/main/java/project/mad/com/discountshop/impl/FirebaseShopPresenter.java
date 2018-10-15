@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,8 +28,6 @@ import project.mad.com.discountshop.data.Shop;
 public class FirebaseShopPresenter implements IDiscountShopPresenter{
     private static final String TAG = "FirebaseShopPresenter";
     private IShopView mIDiscountShopView;
-    private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-//    private String mUid = mUser.getUid();
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference shopRef = database.getReference(Constants.KEY_SHOP);
     private ArrayList<Shop> mShops = new ArrayList<Shop>();

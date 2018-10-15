@@ -31,7 +31,7 @@ public class AddActivity extends AppCompatActivity implements GoogleApiClient.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        Log.d(TAG, "onCreate: starting");
+        Log.d(TAG, getString(R.string.pager_tag));
 
         mViewPager = findViewById(R.id.container);
         setupViewPager(mViewPager);
@@ -39,6 +39,7 @@ public class AddActivity extends AppCompatActivity implements GoogleApiClient.On
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        //set bottom navigation
         BottomNavigationView bottomNav = findViewById(R.id.navigation_bar);
         BottomNavigationViewHelper.disableShiftMode(bottomNav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);

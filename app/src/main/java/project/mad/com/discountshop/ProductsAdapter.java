@@ -19,7 +19,7 @@ import project.mad.com.discountshop.data.Product;
  * set the products from array to recyclerview
  */
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder> {
-    private List<Product> mProductsArray;
+    public List<Product> productsArray;
     private Context mContext;
 
     /**
@@ -29,7 +29,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
      * @param context
      */
     public ProductsAdapter(ArrayList<Product> products, Context context) {
-        mProductsArray = products;
+        productsArray = products;
         mContext = context;
     }
 
@@ -43,7 +43,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
 
     @Override
     public void onBindViewHolder(@NonNull ProductsViewHolder holder, int position) {
-        Product product = mProductsArray.get(position);
+        Product product = productsArray.get(position);
         holder.product_name.setText(product.getName());
         holder.product_brand.setText(product.getBrand());
         holder.product_capacity.setText(product.getCapacity());
@@ -53,7 +53,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
 
     @Override
     public int getItemCount() {
-        return mProductsArray.size();
+        return productsArray.size();
     }
 
     /**

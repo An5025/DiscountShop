@@ -11,5 +11,6 @@ public interface IBarcodeView {
     void inputSuccess();
     void inputError();
     void inputInvalid();
+    void exist();
     void databaseError();
 }

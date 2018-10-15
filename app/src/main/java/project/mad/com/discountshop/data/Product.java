@@ -13,7 +13,7 @@ public class Product extends Shop {
 
     /**
      * product constructor
-     * initialize variables
+     * initialize all product variables
      * @param name
      * @param brand
      * @param capacity

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/shap"
+    android:gravity="center"
     android:padding="5dp">
 
     <LinearLayout
@@ -11,79 +12,78 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:text="@string/shop_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/orange"
-            android:textStyle="bold"/>
+            android:text="@string/shop_name"
+            android:textColor="@color/pink"
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/shop_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/product_name"
-            android:textSize="20sp"
-            />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearlayout1"
+        android:id="@+id/bottom_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/shop_name_layout"
+        android:layout_below="@id/shop_name_layout"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/discount_off"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/orange"/>
-
-        <TextView
-            android:id="@+id/shop_disc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/_30"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/off"
-            android:textSize="20sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayouts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/linearlayout1">
         <LinearLayout
-            android:id="@+id/linearlayout2"
+            android:id="@+id/linearlayout1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="2"
-            android:layout_width="0dp">
+            android:layout_below="@id/shop_name_layout"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/date_view"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/orange"/>
+                android:text="@string/discount_off"
+                android:textColor="@color/pink"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/shop_disc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_30"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/off"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearlayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pink"
+                android:textSize="16dp"
+                android:text="@string/date_view" />
 
             <TextView
                 android:id="@+id/shop_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_8"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>

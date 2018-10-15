@@ -37,15 +37,15 @@ import project.mad.com.discountshop.impl.FirebaseProductPresenter;
  */
 public class ProductFragment extends Fragment implements ISaveDataView {
     private static final String TAG = "ProductFragment";
-    EditText mName, mCapacity, mBrand, mDiscount;
+    private EditText mName, mCapacity, mBrand, mDiscount;
     private DatePickerDialog.OnDateSetListener mOnDateSetListener;
     private FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-    FirebaseProductPresenter mPresenter;
-    Button mSubmit_btn, mScan_btn;
-    String mBarcodeValue;
-    TextView mDate;
-    int mDiscount2;
-    View mView;
+    private FirebaseProductPresenter mPresenter;
+    private Button mSubmit_btn, mScan_btn;
+    private String mBarcodeValue;
+    private TextView mDate;
+    private int mDiscount2;
+    private View mView;
 
 
     @Nullable
@@ -79,6 +79,7 @@ public class ProductFragment extends Fragment implements ISaveDataView {
             }
         });
 
+        //select expiry date
         mDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +107,7 @@ public class ProductFragment extends Fragment implements ISaveDataView {
             }
         };
 
+        //scan product barcode to get product information
         mScan_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +166,18 @@ public class ProductFragment extends Fragment implements ISaveDataView {
         Toast.makeText(getActivity(), R.string.databaseError, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void notExist() {
+        Toast.makeText(getActivity(), R.string.no_barcode, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * barcode model
+     * stored in barcode fragment
+     * @param name
+     * @param brand
+     * @param capacity
+     */
     @Override
     public void showModelData(String name, String brand, String capacity) {
         mName.setText(name);

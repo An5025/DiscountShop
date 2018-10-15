@@ -16,18 +16,20 @@
             android:id="@+id/scan_barcode_btn"
             android:text="@string/scan"
             android:layout_margin="5dp"
-            android:background="@color/yellow"
-            android:textColor="@color/orange"/>
+            android:background="@drawable/button"
+            android:textColor="@color/pink"/>
 
         <TableRow>
             <TextView
                 android:layout_margin="10dp"
                 android:text="@string/barcode"
-                android:textSize="20sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/pink"/>
 
             <EditText
                 android:id="@+id/product_barcode_et"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textColor="@color/colorText"/>
         </TableRow>
 
         <TableRow>
@@ -35,11 +37,13 @@
             <TextView
                 android:layout_margin="10dp"
                 android:text="@string/product_name"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textColor="@color/pink"/>
 
             <EditText
                 android:id="@+id/product_name_et"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textColor="@color/colorText"/>
         </TableRow>
 
         <TableRow>
@@ -47,11 +51,13 @@
             <TextView
                 android:layout_margin="10dp"
                 android:text="@string/product_brand"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textColor="@color/pink"/>
 
             <EditText
                 android:id="@+id/product_brand_et"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textColor="@color/colorText"/>
         </TableRow>
 
         <TableRow>
@@ -59,19 +65,21 @@
             <TextView
                 android:layout_margin="10dp"
                 android:text="@string/product_capacity"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textColor="@color/pink"/>
 
             <EditText
                 android:id="@+id/product_capacity_et"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textColor="@color/colorText"/>
         </TableRow>
 
         <Button
             android:id="@+id/barcode_confirm_btn"
             android:layout_margin="40dp"
-            android:background="@color/orange"
             android:text="@string/confirm"
-            android:textColor="@color/yellow"/>
+            android:background="@drawable/button"
+            android:textColor="@color/pink"/>
 
 
     </TableLayout>

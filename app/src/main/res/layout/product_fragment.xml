@@ -16,19 +16,21 @@
             android:id="@+id/scan_btn"
             android:layout_margin="5dp"
             android:text="@string/scan_product"
-            android:background="@color/yellow"
-            android:textColor="@color/orange"/>
+            android:background="@drawable/button"
+            android:textColor="@color/pink"/>
 
         <TableRow>
 
             <TextView
                 android:id="@+id/name"
                 android:text="@string/name"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textColor="@color/pink"/>
 
             <EditText
                 android:id="@+id/name_et"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textColor="@color/colorText"/>
         </TableRow>
 
         <TableRow>
@@ -36,11 +38,13 @@
             <TextView
                 android:id="@+id/brand"
                 android:text="@string/brand"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textColor="@color/pink" />
 
             <EditText
                 android:id="@+id/brand_et"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textColor="@color/colorText"/>
         </TableRow>
 
         <TableRow>
@@ -48,11 +52,13 @@
             <TextView
                 android:id="@+id/capacity_tv"
                 android:text="@string/capacity"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textColor="@color/pink" />
 
             <EditText
                 android:id="@+id/capacity_et"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textColor="@color/colorText"/>
         </TableRow>
 
         <TableRow>
@@ -60,11 +66,17 @@
             <TextView
                 android:id="@+id/discount"
                 android:text="@string/discount"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textColor="@color/pink" />
 
             <EditText
                 android:id="@+id/discount_et"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:textColor="@color/colorText"/>
+
+            <TextView
+                android:text="@string/off"
+                android:textSize="15sp"/>
         </TableRow>
 
         <TableRow>
@@ -72,7 +84,8 @@
             <TextView
                 android:id="@+id/expiry_date"
                 android:text="@string/date"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textColor="@color/pink" />
 
             <TextView
                 android:id="@+id/date_tv"
@@ -83,9 +96,9 @@
         <Button
             android:id="@+id/discount_confirm_btn"
             android:layout_margin="40dp"
-            android:background="@color/orange"
             android:text="@string/confirm"
-            android:textColor="@color/yellow"/>
+            android:background="@drawable/button"
+            android:textColor="@color/pink"/>
 
     </TableLayout>
 </android.support.constraint.ConstraintLayout>

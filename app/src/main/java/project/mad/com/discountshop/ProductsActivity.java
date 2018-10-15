@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,11 +32,12 @@ import project.mad.com.discountshop.data.Product;
  * dispaly them by recyclerview
  */
 public class ProductsActivity extends AppCompatActivity {
-    RecyclerView mProductRecyclerView;
+    private RecyclerView mProductRecyclerView;
     private ArrayList<Product> mProducts = new ArrayList<Product>();
     private ProductsAdapter mProductsAdapter;
-    Query mProductsRef;
-    View mView;
+    private ProgressBar mProgressBar;
+    private Query mProductsRef;
+    private View mView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,8 +57,12 @@ public class ProductsActivity extends AppCompatActivity {
         mProductRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mProductRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mProductRecyclerView.setAdapter(mProductsAdapter);
+        mProgressBar = findViewById(R.id.product_progress);
+        mProgressBar.setVisibility(View.VISIBLE);
 
-        getDataFirebase();
+        //retrieve product data by reference
+        mProductsRef = FirebaseDatabase.getInstance().getReference().child(Constants.KEY_PRODUCT);
+        getDataFirebase(mProductsRef);
     }
 
     /**
@@ -91,16 +97,34 @@ public class ProductsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_product, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.orderByProductDiscount) {
+            destroyArray();
+            getDataFirebase(mProductsRef.orderByChild(Constants.KEY_DISCOUNT));
+        }else if (id == R.id.orderByProductName) {
+            destroyArray();
+            getDataFirebase(mProductsRef.orderByChild(Constants.KEY_NAME));
+        }else if (id == R.id.orderByProductBrand) {
+            destroyArray();
+            getDataFirebase(mProductsRef.orderByChild(Constants.KEY_BRAND));
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
      * use products reference to get product information and save then to a list
      */
-    void getDataFirebase(){
-        mProductsRef = FirebaseDatabase.getInstance().getReference().child(Constants.KEY_PRODUCT);
-        mProductsRef.addValueEventListener(new ValueEventListener() {
+    private void getDataFirebase(Query productRef){
+        productRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
@@ -108,7 +132,7 @@ public class ProductsActivity extends AppCompatActivity {
                     mProducts.add(product);
                 }
                 mProductsAdapter.notifyDataSetChanged();
-
+                mProgressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -116,6 +140,14 @@ public class ProductsActivity extends AppCompatActivity {
                 Snackbar.make(mView, getString(R.string.error), Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * destroy current recyclerview array
+     */
+    private void destroyArray(){
+        mProductsAdapter.productsArray.clear();
+        mProductsAdapter.notifyDataSetChanged();
     }
 
 }

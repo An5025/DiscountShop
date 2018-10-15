@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".UserActivity">
 
+    <ProgressBar
+        android:id="@+id/user_progress"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:progress="@integer/google_play_services_version"
+        android:progressDrawable="@drawable/circle"/>
+
     <RelativeLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
@@ -61,9 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="20dp"
-            android:background="@color/colorAccent"
             android:text="@string/sign_out"
-            android:textColor="@color/white" />
+            android:background="@drawable/button"
+            android:textColor="@color/pink"/>
 
     </RelativeLayout>
 
