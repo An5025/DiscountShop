@@ -66,16 +66,19 @@ public class ProductFragment extends Fragment implements ISaveDataView {
         mSubmit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mPresenter.checkDate(mDate.getText().toString());
                 try {
                     mDiscount2 = Integer.parseInt(mDiscount.getText().toString().trim());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                mPresenter.input(mName.getText().toString().trim(),
-                        mBrand.getText().toString().trim(),
-                        mCapacity.getText().toString().trim(), mDiscount2,
-                        mDate.getText().toString().trim()
-                );
+                if (mPresenter.isValidDate != null) {
+                    mPresenter.input(mName.getText().toString().trim(),
+                            mBrand.getText().toString().trim(),
+                            mCapacity.getText().toString().trim(), mDiscount2,
+                            mDate.getText().toString().trim()
+                    );
+                }
             }
         });
 

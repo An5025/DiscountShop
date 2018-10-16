@@ -11,7 +11,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +29,7 @@ import project.mad.com.discountshop.data.Shop;
  * save shop fragment data to firebase
  */
 public class FirebaseShopPresenter implements IDiscountShopPresenter{
+    public Boolean isValidDate;
     private static final String TAG = "FirebaseShopPresenter";
     private IShopView mIDiscountShopView;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -46,7 +50,7 @@ public class FirebaseShopPresenter implements IDiscountShopPresenter{
     public void input(String name, Integer discount, String date) {
         if(TextUtils.isEmpty(name) || TextUtils.isEmpty(discount.toString()) || TextUtils.isEmpty(date)){
             mIDiscountShopView.showValidationError();
-        }else if (discount>Constants.KEY_MIN && discount<Constants.KEY_MAX){
+        }else if (discount>Constants.KEY_MIN && discount<Constants.KEY_MAX && isValidDate){
             Map<String, Object> post = new HashMap<>();
             post.put(Constants.KEY_NAME, name);
             post.put(Constants.KEY_DISCOUNT, discount);
@@ -89,5 +93,20 @@ public class FirebaseShopPresenter implements IDiscountShopPresenter{
         });
 
         return mShops;
+    }
+
+    @Override
+    public void checkDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date strDate = sdf.parse(date);
+            if (new Date().after(strDate)) {
+                isValidDate = false;
+            }else{
+                isValidDate = true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

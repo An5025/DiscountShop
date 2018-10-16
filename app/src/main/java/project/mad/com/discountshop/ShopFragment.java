@@ -84,8 +84,11 @@ public class ShopFragment extends Fragment implements IShopView{
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                mPresenter.input(mName.getText().toString().trim(), discount,
-                                mDate.getText().toString().trim());
+                mPresenter.checkDate( mDate.getText().toString().trim());
+                if (mPresenter.isValidDate) {
+                    mPresenter.input(mName.getText().toString().trim(), discount,
+                            mDate.getText().toString().trim());
+                }
             }
         });
         return view;

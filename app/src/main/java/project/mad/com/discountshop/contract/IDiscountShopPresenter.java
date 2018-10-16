@@ -20,4 +20,10 @@ public interface IDiscountShopPresenter {
      */
     ArrayList<Shop> getFirebaseData();
 
+    /**
+     * check if expiry
+     * @param date expiry date
+     */
+    void checkDate(String date);
+
 }

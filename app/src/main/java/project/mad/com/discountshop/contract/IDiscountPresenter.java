@@ -17,4 +17,6 @@ public interface IDiscountPresenter {
      * @param barcode
      */
     void searchBarcode(String barcode);
+
+    void checkDate(String date);
 }

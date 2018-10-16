@@ -11,6 +11,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +25,7 @@ import project.mad.com.discountshop.contract.ISaveDataView;
  * save product fragment data to firebase
  */
 public class FirebaseProductPresenter implements IDiscountPresenter{
+    public Boolean isValidDate;
     private static final String TAG = "FirebaseProductPresente";
     private ISaveDataView mIDiscountView;
     private Query mSearchBarcode;
@@ -42,7 +46,7 @@ public class FirebaseProductPresenter implements IDiscountPresenter{
         if(TextUtils.isEmpty(name) || TextUtils.isEmpty(brand) || TextUtils.isEmpty(capacity)
                 || String.valueOf(discount).isEmpty() || TextUtils.isEmpty(date)){
             mIDiscountView.showValidationError();
-        }else if (discount>Constants.KEY_MIN && discount<Constants.KEY_MAX){
+        }else if (discount>Constants.KEY_MIN && discount<Constants.KEY_MAX && isValidDate){
 
             Map<String, Object> post = new HashMap<>();
             post.put(Constants.KEY_NAME, name);
@@ -91,5 +95,20 @@ public class FirebaseProductPresenter implements IDiscountPresenter{
 
             }
         });
+    }
+
+    @Override
+    public void checkDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date strDate = sdf.parse(date);
+            if (new Date().after(strDate)) {
+                isValidDate = false;
+            }else{
+                isValidDate = true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
